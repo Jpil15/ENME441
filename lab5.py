@@ -3,9 +3,10 @@ import time
 import math
 
 
+
+p = 4
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(p, GPIO.OUT) 
-p = 4
 
 
 pwm = GPIO.PWM(p, 500)
