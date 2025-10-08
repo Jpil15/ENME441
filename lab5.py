@@ -59,6 +59,7 @@ try:
 
 	def myCallback(button):
 		print("switch direction")
+		global d
 		d = -1*d
 
 
@@ -67,7 +68,7 @@ try:
 
 	while True: 
 
-		d = 1
+
 		t = time.time()
 		brightness = (math.sin(2 * math.pi * f * t * d))**2
 		duty = brightness * 100
@@ -97,7 +98,7 @@ try:
 		duty7 = brightness7 * 100
 		pwm7.ChangeDutyCycle(duty7)
 
-		brightness8 = (math.sin((2 * math.pi * f * t) - 1.999))**2
+		brightness8 = (math.sin((2 * math.pi * f * t) - 1.999 * d))**2
 		duty8 = brightness8 * 100
 		pwm8.ChangeDutyCycle(duty8)
 
