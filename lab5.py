@@ -54,14 +54,14 @@ try:
 	pwm9.start(0)
 	pwm10.start(0)
 
-d = 1
+	d = 1
 
-def myCallback(button):
+	def myCallback(button):
 	print("switch direction")
 	d = d * (-1)
 
 
-gpio.add_event_detect(button, gpio.RISING, callback=myCallback, bouncetime = 100)
+	gpio.add_event_detect(button, gpio.RISING, callback=myCallback, bouncetime = 100)
 
 
 	while True: 
