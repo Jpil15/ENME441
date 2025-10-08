@@ -25,7 +25,7 @@ try:
 		duty = brightness * 100
 		pwm.ChangeDutyCycle(duty)
 
-		brightness2 = (math.sin(2 * math.pi * f * t - 0.285))**2
+		brightness2 = (math.sin((2 * math.pi * f * t) - 0.285))**2
 		duty2 = brightness2 * 100
 		pwm.ChangeDutyCycle(duty2)
 
