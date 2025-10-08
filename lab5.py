@@ -41,6 +41,7 @@ pwm9 = GPIO.PWM(p9, 500)
 pwm10 = GPIO.PWM(p10, 500)
 
 f = 0.2
+d = 1
 
 try: 
 	pwm.start(0)
@@ -54,7 +55,6 @@ try:
 	pwm9.start(0)
 	pwm10.start(0)
 
-	d = 1
 
 	def myCallback(button):
 		print("switch direction")
