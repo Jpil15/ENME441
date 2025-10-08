@@ -27,7 +27,7 @@ try:
 
 		brightness2 = (math.sin((2 * math.pi * f * t) - 0.285))**2
 		duty2 = brightness2 * 100
-		pwm.ChangeDutyCycle(duty2)
+		pwm2.ChangeDutyCycle(duty2)
 
 
 except KeyboardInterrupt: 
