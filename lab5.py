@@ -41,7 +41,7 @@ pwm9 = GPIO.PWM(p9, 500)
 pwm10 = GPIO.PWM(p10, 500)
 
 f = 0.2
-d = 1
+global d = 1
 
 try: 
 	pwm.start(0)
