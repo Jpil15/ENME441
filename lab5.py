@@ -41,7 +41,7 @@ pwm9 = GPIO.PWM(p9, 500)
 pwm10 = GPIO.PWM(p10, 500)
 
 f = 0.2
-global d = 1
+d = 1
 
 try: 
 	pwm.start(0)
@@ -56,9 +56,10 @@ try:
 	pwm10.start(0)
 
 
-	def myCallback(button):
+
+	def myCallback(button, d):
 		print("switch direction")
-		d = d * (-1)
+		d = -1*d
 
 
 	GPIO.add_event_detect(button, GPIO.RISING, callback=myCallback, bouncetime = 100)
@@ -123,3 +124,4 @@ except KeyboardInterrupt:
 
 pwm.stop()
 GPIO.cleanup()
+
