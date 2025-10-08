@@ -18,7 +18,7 @@ f = 0.2
 
 try: 
 	pwm.start(0)
-	pwm2.start(100)
+	pwm2.start(0)
 	while True: 
 		t = time.time()
 		brightness = (math.sin(2 * math.pi * f * t))**2
