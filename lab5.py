@@ -15,11 +15,11 @@ f = 0.2
 
 
 try: 
+	pwm.start(0)
 	while True: 
 		t = time.time()
 		brightness = (math.sin(2 * math.pi * f * t))**2
 		duty = brightness * 100
-		pwm.start(duty)
 		pwm.ChangeDutyCycle(duty)
 
 
