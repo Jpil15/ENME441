@@ -57,8 +57,8 @@ try:
 	d = 1
 
 	def myCallback(button):
-	print("switch direction")
-	d = d * (-1)
+		print("switch direction")
+		d = d * (-1)
 
 
 	gpio.add_event_detect(button, gpio.RISING, callback=myCallback, bouncetime = 100)
