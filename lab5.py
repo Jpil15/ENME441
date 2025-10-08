@@ -61,7 +61,7 @@ try:
 		d = d * (-1)
 
 
-	gpio.add_event_detect(button, gpio.RISING, callback=myCallback, bouncetime = 100)
+	GPIO.add_event_detect(button, GPIO.RISING, callback=myCallback, bouncetime = 100)
 
 
 	while True: 
