@@ -19,7 +19,7 @@ def shiftByte(b): # send a byte of data to the output
 	ping(latchPin) # send register to output
 
 try:
-	shiftByte(0b01100110) # test out the new function
+	shiftByte(0b01100000) # test out the new function
 	while 1: pass
 except:
 	GPIO.cleanup()
