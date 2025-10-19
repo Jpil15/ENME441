@@ -4,6 +4,8 @@ import random
 import threading
 from shifter import Shifter
 
+GPIO.setmode(GPIO.BCM)
+
 class Bug:
     def __init__(self, serialPin, clockPin, latchPin,
                  timestep=0.1, x=3, isWrapOn=True, active_low=False):
@@ -82,5 +84,6 @@ if __name__ == "__main__":
             time.sleep(1)
     except KeyboardInterrupt:
             bug.shutdown()
+
 
 
