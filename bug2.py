@@ -1,52 +1,54 @@
 import time
 import RPi.GPIO as GPIO
-from bug import Bug   # your Bug class from bug.py (previous step)
+from bug import Bug   # <-- your Bug class from the previous step
 
-# ===== Pin numbers (BCM mode) =====
+# ---------- Use BCM numbering (set once, before any GPIO.setup) ----------
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+
+# ---------- Shifter pins (BCM) ----------
 DATA_PIN   = 23   # SER
 CLOCK_PIN  = 25   # SRCLK
 LATCH_PIN  = 24   # RCLK
 
-S1_PIN     = 13   # switch 1 (on/off)
-S2_PIN     = 19   # switch 2 (wrap toggle)
-S3_PIN     = 26   # switch 3 (speed boost)
+# ---------- Switch pins (BCM) ----------
+S1_PIN     = 13   # on/off switch
+S2_PIN     = 19   # wrap toggle (flip on any state change)
+S3_PIN     = 26   # speed boost (3× faster while on)
 
-# ===== Setup =====
-GPIO.setmode(GPIO.BCM)
+# Inputs with pull-ups so buttons read LOW when pressed
 GPIO.setup(S1_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(S2_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(S3_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-# ===== Instantiate Bug with defaults =====
-bug = Bug(DATA_PIN, CLOCK_PIN, LATCH_PIN)  # timestep=0.1, x=3, wrap=False
+# ---------- Instantiate Bug with defaults: timestep=0.1, x=3, isWrapOn=False ----------
+bug = Bug(DATA_PIN, CLOCK_PIN, LATCH_PIN)
 
-# ===== Main loop =====
 try:
-    prev_s2 = GPIO.input(S2_PIN)  # track previous state for edge detection
+    # Track s2’s previous state to detect toggles (press OR release)
+    prev_s2 = GPIO.input(S2_PIN)
 
     while True:
-        # --- S1 controls ON/OFF ---
-        if GPIO.input(S1_PIN) == GPIO.LOW:   # pressed
+        # a/b) s1 controls ON/OFF (pressed == LOW)
+        if GPIO.input(S1_PIN) == GPIO.LOW:
             bug.start()
         else:
             bug.stop()
 
-        # --- S2 toggles wrapping (on state change) ---
+        # c) s2 flips wrapping whenever its state changes
         s2_now = GPIO.input(S2_PIN)
-        if s2_now != prev_s2:  # edge detected
+        if s2_now != prev_s2:
             bug.isWrapOn = not bug.isWrapOn
         prev_s2 = s2_now
 
-        # --- S3 triples speed if pressed ---
-        if GPIO.input(S3_PIN) == GPIO.LOW:
-            bug.timestep = 0.1 / 3.0   # 3x faster
-        else:
-            bug.timestep = 0.1         # back to default
+        # d) s3 speeds up by 3× while pressed
+        bug.timestep = (0.1 / 3.0) if (GPIO.input(S3_PIN) == GPIO.LOW) else 0.1
 
-        time.sleep(0.05)  # debounce/poll delay
+        # small poll/debounce delay
+        time.sleep(0.05)
 
 except KeyboardInterrupt:
     pass
 finally:
-    bug.stop()
-    GPIO.cleanup()
+    # stop movement, turn LEDs off, and release GPIO exactly once
+    bug.shutdown()
