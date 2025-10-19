@@ -22,17 +22,17 @@ GPIO.setup(speedCatch, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 def onCallback(pin):
 	global onState
 	onState = not onState
-	print(f"on/off toggled to {onState}")
+	print(f"on/off {onState}")
 
 def wrapCallback(pin):
 	global wrapState
 	wrapState = not wrapState
-	print(f"wrap toggled to {wrapState}")
+	print(f"wrap {wrapState}")
 
 def speedUpCallback(pin):
 	global speedState
 	speedState = not speedState
-	print(f"speed toggled to {speedState}")
+	print(f"speed {speedState}")
 
 def run():
 	global bugout, wrapOn, speed, wrapState, speedState, onState, shift
@@ -62,10 +62,10 @@ try:
 	while 1:
 		run()
 except KeyboardInterrupt:
-	print("Exiting")
 	bugout.stop()
 
 	GPIO.cleanup()
+
 
 
 
