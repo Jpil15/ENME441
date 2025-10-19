@@ -5,7 +5,7 @@ dataPin, latchPin, clockPin = 23, 24, 25
 GPIO.setup(dataPin, GPIO.OUT)
 GPIO.setup(latchPin, GPIO.OUT, initial=0) # start latch & clock low
 GPIO.setup(clockPin, GPIO.OUT, initial=0)
-pattern = 0b01100110 # pattern to display
+pattern = 0b01100000 # pattern to display
 
 def ping(p): # ping the clock or latch pin
 	GPIO.output(p,1)
