@@ -1,6 +1,6 @@
 import time
 import RPi.GPIO as GPIO
-from bug import Bug   # <-- your Bug class from the previous step
+from bug import bug   # <-- your Bug class from the previous step
 
 # ---------- Use BCM numbering (set once, before any GPIO.setup) ----------
 GPIO.setwarnings(False)
@@ -52,3 +52,4 @@ except KeyboardInterrupt:
 finally:
     # stop movement, turn LEDs off, and release GPIO exactly once
     bug.shutdown()
+
