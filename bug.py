@@ -71,7 +71,7 @@ class Bug:
 # Example usage (run this file directly to test):
 if __name__ == "__main__":
     DATA_PIN, CLOCK_PIN, LATCH_PIN = 23, 25, 24   # BCM numbering
-    bug = Bug(DATA_PIN, CLOCK_PIN, LATCH_PIN, timestep=0.05, x=3, isWrapOn=False)
+    bug = Bug(DATA_PIN, CLOCK_PIN, LATCH_PIN, timestep=0.05, x=3, isWrapOn=True)
     try:
         bug.start()
         while True:
@@ -79,3 +79,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
 
         bug.stop()
+
