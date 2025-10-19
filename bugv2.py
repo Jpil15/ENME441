@@ -8,7 +8,7 @@ onCatch, speedCatch, wrapCatch = 13, 19, 26
 onState, wrapState, speedState = False, False, False
 
 shift = Shifter(serialPin, clockPin, latchPin)
-bugout = Bug(shift)
+bugout = Bug(serialPin, clockPin, latchPin)
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(serialPin, GPIO.OUT)
@@ -66,4 +66,5 @@ except KeyboardInterrupt:
 	bugout.stop()
 
 	GPIO.cleanup()
+
 
