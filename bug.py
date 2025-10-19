@@ -1,4 +1,5 @@
 # bug.py
+import RPi.GPIO as GPIO
 import time
 import random
 import threading
@@ -84,6 +85,7 @@ if __name__ == "__main__":
             time.sleep(1)
     except KeyboardInterrupt:
             bug.shutdown()
+
 
 
 
