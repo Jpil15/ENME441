@@ -1,7 +1,7 @@
 import time
 import RPi.GPIO as GPIO
 from shifter import ShifterClass
-from bug import Bug
+from Bug_Class import Bug
 
 serialPin, latchPin, clockPin = 23, 24, 25
 onCatch, speedCatch, wrapCatch = 13, 19, 26
@@ -66,6 +66,7 @@ except KeyboardInterrupt:
 	bugout.stop()
 
 	GPIO.cleanup()
+
 
 
 
