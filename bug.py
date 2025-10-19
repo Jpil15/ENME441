@@ -67,6 +67,10 @@ class Bug:
         self.__shifter.shiftByte(0xFF if self.__active_low else 0x00)
         self.__shifter.cleanup()
 
+    def shutdown(self):
+        self.stop()
+        # make sure your Shifter has a cleanup() that calls GPIO.cleanup()
+        self._Bug__shifter.cleanup()
 
 # Example usage (run this file directly to test):
 if __name__ == "__main__":
@@ -77,6 +81,6 @@ if __name__ == "__main__":
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
+            bug.shutdown()
 
-        bug.stop()
 
