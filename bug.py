@@ -3,6 +3,11 @@ import time
 import random
 import threading
 from shifter import Shifter
+import RPi.GPIO as GPIO
+
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
 
 
 class Bug:
@@ -85,13 +90,6 @@ if __name__ == "__main__":
             bug.shutdown()
 
 
-import time
-import RPi.GPIO as GPIO
-from bug import Bug  
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-
 # ---------- Shifter pins (BCM) ----------
 DATA_PIN   = 23   # SER
 CLOCK_PIN  = 25   # SRCLK
@@ -138,6 +136,7 @@ except KeyboardInterrupt:
 finally:
     # stop movement, turn LEDs off, and release GPIO exactly once
     bug.shutdown()
+
 
 
 
