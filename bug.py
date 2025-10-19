@@ -85,6 +85,9 @@ if __name__ == "__main__":
             bug.shutdown()
 
 
+import time
+import RPi.GPIO as GPIO
+from bug import Bug  
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -135,6 +138,7 @@ except KeyboardInterrupt:
 finally:
     # stop movement, turn LEDs off, and release GPIO exactly once
     bug.shutdown()
+
 
 
 
