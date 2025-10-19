@@ -1,11 +1,9 @@
 # bug.py
-import RPi.GPIO as GPIO
 import time
 import random
 import threading
 from shifter import Shifter
 
-GPIO.setmode(GPIO.BCM)
 
 class Bug:
     def __init__(self, serialPin, clockPin, latchPin,
@@ -85,6 +83,7 @@ if __name__ == "__main__":
             time.sleep(1)
     except KeyboardInterrupt:
             bug.shutdown()
+
 
 
 
