@@ -40,15 +40,13 @@ def cleanup_and_exit(*_):
 signal.signal(signal.SIGINT, cleanup_and_exit)
 signal.signal(signal.SIGTERM, cleanup_and_exit)
 
-# ===== HTML templates =====
 
 def html_page():
-    # Build the page showing current levels and the POST form
-    # Radio selects LED 1/2/3; single slider sets brightness 0..100
+
     return f"""\
 <html>
   <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 24px;">
-    <h2>ENME 441 — Lab 7: LED PWM Control (Problem 1)</h2>
+    <h2>ENME 441 — Lab 7</h2>
     <p>Use the form to select an LED and set its brightness (0–100%). Uses POST to modify device state.</p>
 
     <h3>Current Brightness</h3>
@@ -75,15 +73,11 @@ def html_page():
     </form>
 
     <hr>
-    <small>Server: raw sockets (TCP) → HTTP/1.1 (status + headers + CRLF + body). POST body is form-encoded.</small>
   </body>
 </html>
 """
 
-# ===== HTTP helpers (raw socket) =====
-
 def send_http(conn, body_html, status_code=200, status_text="OK"):
-    # Build a minimal valid HTTP/1.1 response (per lecture formatting)
     head  = f"HTTP/1.1 {status_code} {status_text}\r\n"
     head += "Content-Type: text/html; charset=utf-8\r\n"
     head += "Connection: close\r\n"
@@ -92,14 +86,9 @@ def send_http(conn, body_html, status_code=200, status_text="OK"):
     conn.sendall(resp.encode("utf-8"))
 
 def parse_headers_and_body(request_bytes):
-    """
-    Split raw HTTP request into (start_line:str, headers:dict[str,str], body_bytes:bytes).
-    We handle Content-Length for POST to ensure we read full body.
-    """
-    # Find header/body separator
     sep = request_bytes.find(b"\r\n\r\n")
     if sep == -1:
-        # No full headers yet; return what we have
+        
         return None, {}, b"", sep
     header_part = request_bytes[:sep].decode("iso-8859-1", errors="replace")
     body = request_bytes[sep+4:]
@@ -116,10 +105,7 @@ def parse_headers_and_body(request_bytes):
     return start_line, headers, body, sep
 
 def read_full_request(conn):
-    """
-    Read enough from the socket to obtain the full HTTP request including POST body
-    according to Content-Length (if present).
-    """
+    
     chunks = []
     conn.settimeout(2.0)
     try:
@@ -129,10 +115,10 @@ def read_full_request(conn):
             return b""
         chunks.append(first)
 
-        # Check if we already have headers
+    
         start_line, headers, body, sep = parse_headers_and_body(first)
         if sep == -1:
-            # Keep reading until headers arrive (simple approach)
+            # Keep reading 
             while True:
                 more = conn.recv(4096)
                 if not more:
@@ -165,10 +151,7 @@ def read_full_request(conn):
         return b""
 
 def parse_post_form(body_bytes):
-    """
-    Parse application/x-www-form-urlencoded body into a dict.
-    Example: b'led=2&brightness=75'
-    """
+
     data = {}
     try:
         text = body_bytes.decode("utf-8", errors="replace")
@@ -204,7 +187,7 @@ def main():
                     # No valid request; just close
                     continue
 
-                # Parse request line and headers again (we have the full data now)
+                # Parse request line and headers again
                 start_line, headers, body, _ = parse_headers_and_body(req_raw)
                 method = ""
                 path = "/"
@@ -213,10 +196,10 @@ def main():
                     if len(parts) >= 2:
                         method, path = parts[0], parts[1]
 
-                # Handle POST to modify LED state (per lab requirement) :contentReference[oaicite:2]{index=2}
+                # Handle POST to modify LED state
                 if method.upper() == "POST" and path == "/":
                     form = parse_post_form(body)
-                    # Expect 'led' in {'1','2','3'} and 'brightness' in 0..100
+                
                     try:
                         led_idx = int(form.get("led", "0")) - 1
                         duty = int(form.get("brightness", "0"))
@@ -228,7 +211,7 @@ def main():
                     # Serve updated page
                     send_http(conn, html_page(), 200, "OK")
 
-                # Serve form page for GET (or anything else to root)
+                # Serve form page for GET
                 elif method.upper() == "GET" and path.startswith("/"):
                     send_http(conn, html_page(), 200, "OK")
 
@@ -241,3 +224,4 @@ if __name__ == "__main__":
         main()
     finally:
         cleanup_and_exit()
+
