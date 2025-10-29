@@ -5,11 +5,11 @@ import json
 from urllib.parse import unquote_plus
 import RPi.GPIO as GPIO
 
-HOST = ''           # all interfaces (0.0.0.0)
-PORT = 8080         # non-privileged port (avoid sudo)
-FREQ_HZ = 1000      # PWM frequency (500–1000 Hz works well for LEDs)
+HOST = ''           
+PORT = 8080         
+FREQ_HZ = 1000      
 
-# === GPIO / PWM setup (software PWM is fine for LEDs) ===
+#GPIO / PWM setup
 GPIO.setmode(GPIO.BCM)
 LED_PINS = [17, 27, 22]   # keep your wiring
 for p in LED_PINS:
@@ -40,9 +40,8 @@ def cleanup_and_exit(*_):
 signal.signal(signal.SIGINT, cleanup_and_exit)
 signal.signal(signal.SIGTERM, cleanup_and_exit)
 
-# === HTML + JavaScript (served on GET /) ===
+# HTML and JavaScript
 def html_page():
-    # Embed current levels so the sliders initialize correctly.
     return f"""\
 <html>
   <head>
@@ -59,8 +58,7 @@ def html_page():
   <body>
     <h2>ENME 441 — Lab 7: LED PWM Control (Problem 2)</h2>
     <p class="muted">
-      Move a slider to change an LED’s brightness. Each move sends a <b>POST</b> to the server and updates the numbers below without reloading the page.
-    </p>
+      
 
     <div class="card">
       <div class="row">
@@ -80,7 +78,6 @@ def html_page():
       </div>
     </div>
 
-    <p class="muted">Server uses raw sockets (TCP) → HTTP/1.1 (status line, headers, CRLF, body). Sliders POST form-encoded data.</p>
 
     <script>
       // Simple debounce so we don't spam the server while sliding quickly
@@ -112,7 +109,7 @@ def html_page():
 </html>
 """
 
-# === HTTP helpers (raw socket) ===
+#HTTP raw socket
 def send_http_html(conn, body_html, code=200, text="OK"):
     head  = f"HTTP/1.1 {code} {text}\r\n"
     head += "Content-Type: text/html; charset=utf-8\r\n"
@@ -190,7 +187,6 @@ def parse_urlencoded(body_bytes):
         pass
     return out
 
-# === Main server ===
 def main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as srv:
         srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -216,7 +212,7 @@ def main():
                     send_http_html(conn, html_page(), 200, "OK")
 
                 elif method.upper() == "POST" and path == "/":
-                    # Expect: led=<0|1|2>&brightness=<0..100>
+                    
                     form = parse_urlencoded(body)
                     try:
                         led_idx = int(form.get("led", "0"))
@@ -225,7 +221,7 @@ def main():
                             set_led(led_idx, duty)
                     except ValueError:
                         pass
-                    # Return JSON with current levels so client updates readouts
+                    # Return JSON
                     send_http_json(conn, {"levels": levels}, 200, "OK")
 
                 else:
@@ -236,3 +232,5 @@ if __name__ == "__main__":
         main()
     finally:
         cleanup_and_exit()
+
+
