@@ -47,7 +47,6 @@ def html_page():
 <html>
   <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 24px;">
     <h2>ENME 441 — Lab 7</h2>
-    <p>Use the form to select an LED and set its brightness (0–100%). Uses POST to modify device state.</p>
 
     <h3>Current Brightness</h3>
     <ul>
@@ -224,5 +223,6 @@ if __name__ == "__main__":
         main()
     finally:
         cleanup_and_exit()
+
 
 
