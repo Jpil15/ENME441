@@ -15,6 +15,6 @@ while True:
 
     # Basic HTTP response
     response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n"
-    response += "<html><body><h1>Hello World</h1></body></html>"
+    response += "<html><body><form action="/" method="POST"><input type="radio" name="led" value="1"> LED 1<br><input type="radio" name="led" value="2"> LED 2<br><input type="radio" name="led" value="3"> LED 3<br><input type="range" name="brightness" min="0" max="100" value="50"><br><input type="submit" value="Set Brightness"></form></body></html>"
     conn.sendall(response.encode())
     conn.close()
