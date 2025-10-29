@@ -4,9 +4,9 @@ import signal
 import RPi.GPIO as GPIO
 from urllib.parse import unquote_plus
 
-HOST = ''          # bind to all interfaces (0.0.0.0)
-PORT = 8080        # non-privileged port per lecture guidance
-FREQ_HZ = 1000     # PWM frequency; 500–1000 Hz avoids visible flicker
+HOST = ''          
+PORT = 8080        
+FREQ_HZ = 1000     
 
 # ===== GPIO / PWM setup =====
 GPIO.setmode(GPIO.BCM)
@@ -224,4 +224,5 @@ if __name__ == "__main__":
         main()
     finally:
         cleanup_and_exit()
+
 
