@@ -41,8 +41,8 @@ class Shifter():
 
 # Example:
 #
-from time import sleep
-s = Shifter(data=16,clock=20,latch=21)   # convenient Pi pins
-for i in range(256):
-     s.shiftByte(i)
-     sleep(0.1)
+#from time import sleep
+#s = Shifter(data=16,clock=20,latch=21)   # convenient Pi pins
+#for i in range(256):
+ #    s.shiftByte(i)
+#     sleep(0.1)
