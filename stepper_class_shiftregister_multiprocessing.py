@@ -5,7 +5,7 @@
 # Because only one motor action is allowed at a time, multithreading could be
 # used instead of multiprocessing. However, the GIL makes the motor process run 
 # too slowly on the Pi Zero, so multiprocessing is needed.
-
+import RPi.GPIO as GPIO
 import time
 import multiprocessing
 from shifter import Shifter   # our custom Shifter class
