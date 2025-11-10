@@ -7,7 +7,7 @@ GPIO.setmode(GPIO.BCM)
 
 class Shifter():
 
-    def __init__(self, data, clock, latch):
+    def __init__(self, data = 16, clock = 20, latch = 21):
         self.dataPin = data
         self.latchPin = latch
         self.clockPin = clock
