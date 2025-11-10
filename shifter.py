@@ -7,7 +7,7 @@ GPIO.setmode(GPIO.BCM)
 
 class Shifter():
 
-    def __init__(self, data = 16, clock = 20, latch = 21):
+    def __init__(self, data, clock, latch):
         self.dataPin = data
         self.latchPin = latch
         self.clockPin = clock
@@ -41,8 +41,8 @@ class Shifter():
 
 # Example:
 #
-# from time import sleep
-# s = Shifter(data=16,clock=20,latch=21)   # convenient Pi pins
-# for i in range(256):
-#     s.shiftByte(i)
-#     sleep(0.1)
+from time import sleep
+s = Shifter(data=16,clock=20,latch=21)   # convenient Pi pins
+for i in range(256):
+     s.shiftByte(i)
+     sleep(0.1)
