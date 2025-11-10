@@ -11,6 +11,7 @@
 # it can be extended to work with 2+ motors without
 # using any additional GPIO pins.
 
+from RPi import GPIO
 from shifter import Shifter
 import time
 
