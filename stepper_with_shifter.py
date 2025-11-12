@@ -33,10 +33,10 @@ delay = 1200/1e6  # delay between steps [us]
 # Make a full rotation of the output shaft:
 def loop(dir): # dir = rotation direction (1=cww, -1=cw)
     global pos
-    for i in range(4096): # 4096 steps/rev
+    for i in range(512): # 4096 steps/rev
         pos += dir
         pos %= 8 
-        s.shiftByte(cycle[pos]<<2)
+        s.shiftByte(cycle[pos]<<4)
         time.sleep(delay)
 
 try:
