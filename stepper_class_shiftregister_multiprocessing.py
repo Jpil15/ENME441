@@ -48,6 +48,8 @@ class Stepper:
         self.lock = lock           # multiprocessing lock
 
         Stepper.num_steppers += 1   # increment the instance count
+        self.proc = None
+
 
     # Signum function:
     def __sgn(self, x):
@@ -77,6 +79,7 @@ class Stepper:
             self.angle.value = (self.angle.value + dir/Stepper.steps_per_degree) % 360
 
     # Move relative angle from current position:
+    """
     def __rotate(self, delta):
         self.lock.acquire()                 # wait until the lock is available
         numSteps = int(Stepper.steps_per_degree * abs(delta))    # find the right # of steps
@@ -85,6 +88,23 @@ class Stepper:
             self.__step(dir)
             time.sleep(Stepper.delay/1e6)
         self.lock.release()
+    """
+
+    """
+    def __rotate(self, delta):
+        numSteps = int(Stepper.steps_per_degree * abs(delta))
+        dir = self.__sgn(delta)
+        for s in range(numSteps):
+            self.__step(dir)
+            time.sleep(Stepper.delay/1e6)
+    """
+    def rotate(self, delta):
+        if self.proc is not None and self.proc.is_alive():
+            self.proc.join()  # finish prior command for this motor
+        p = multiprocessing.Process(target=self.__rotate, args=(delta,))
+        p.start()
+        self.proc = p
+
 
     # Move relative angle from current position:
     def rotate(self, delta):
