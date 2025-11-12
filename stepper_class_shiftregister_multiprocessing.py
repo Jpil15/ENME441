@@ -114,7 +114,18 @@ if __name__ == '__main__':
     # Instantiate 2 Steppers:
     m1 = Stepper(s, lock)
     m2 = Stepper(s, lock)
-"""
+
+    m1.zero()
+    m2.zero()
+    m1.goAngle(90)
+    m1.goAngle(-45)
+    m2.goAngle(-90)
+    m2.goAngle(45)
+    m1.goAngle(-135)
+    m1.goAngle(135)
+    m1.goAngle(0)
+
+    """
     # Zero the motors:
     m1.zero()
     m2.zero()
@@ -136,16 +147,6 @@ if __name__ == '__main__':
     # While the motors are running in their separate processes, the main
     # code can continue doing its thing: 
 """
-
-    m1.zero()
-    m2.zero()
-    m1.goAngle(90)
-    m1.goAngle(-45)
-    m2.goAngle(-90)
-    m2.goAngle(45)
-    m1.goAngle(-135)
-    m1.goAngle(135)
-    m1.goAngle(0)
 
 
     try:
