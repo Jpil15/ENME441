@@ -98,7 +98,7 @@ class Stepper:
 
     # Set the motor zero point
     def zero(self):
-        self.angle.value = 0.0
+        self.angle = 0.0
 
 
 # Example use:
