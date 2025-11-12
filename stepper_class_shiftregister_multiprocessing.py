@@ -90,23 +90,25 @@ class Stepper:
         self.lock.release()
     """
 
-    """
+    
     def __rotate(self, delta):
         numSteps = int(Stepper.steps_per_degree * abs(delta))
         dir = self.__sgn(delta)
-        for s in range(numSteps):
+        for _ in range(numSteps):
             self.__step(dir)
             time.sleep(Stepper.delay/1e6)
-    """
+    
     def rotate(self, delta):
-        if self.proc is not None and self.proc.is_alive():
-            self.proc.join()  # finish prior command for this motor
-        p = multiprocessing.Process(target=self.__rotate, args=(delta,))
+        if getattr(self, "proc", None) and self.proc.is_alive():
+            self.proc.join()                         # finish prior command on this motor
+        p = multiprocessing.Process(target=self._rotate, args=(delta,))
         p.start()
         self.proc = p
 
 
+
     # Move relative angle from current position:
+
     def rotate(self, delta):
         time.sleep(0.1)
         p = multiprocessing.Process(target=self.__rotate, args=(delta,))
