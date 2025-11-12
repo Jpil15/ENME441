@@ -36,7 +36,7 @@ def loop(dir): # dir = rotation direction (1=cww, -1=cw)
     for i in range(2048): # 4096 steps/rev
         pos += dir
         pos %= 8 
-        s.shiftByte(cycle[pos]<<4)
+        s.shiftByte(cycle[pos]<<1)
         time.sleep(delay)
 
 try:
