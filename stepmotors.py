@@ -28,7 +28,7 @@ sequence = [
     [1,0,0,1]
 ]
 
-def step(dir=1, delay=0.002):
+def step(dir=1, delay=0.005):
     """
     dir = +1 → CW
     dir = -1 → CCW
