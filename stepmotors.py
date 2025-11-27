@@ -49,9 +49,9 @@ def step(dir=1, delay=0.002):
     time.sleep(delay)
 
 try:
-    print("Spinning CW... Ctrl+C to stop")
+   
     while True:
-        step(+1)   # keep direction constant for continuous motion
+        step(-1)   # keep direction constant for continuous motion
 
 except KeyboardInterrupt:
     GPIO.cleanup()
