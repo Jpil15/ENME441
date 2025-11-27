@@ -20,14 +20,15 @@ def shift_out(byte):
         GPIO.output(CLOCK, 1)
     GPIO.output(LATCH, 1)
 
-print("Toggling Q0 on/off every second…")
+print("Testing Q1… toggling every second")
 
 try:
     while True:
-      shift_out(0b00000010)  # ONLY Q1 = HIGH
+        shift_out(0b00000010)  # ONLY Q1 = HIGH
         time.sleep(1)
         shift_out(0b00000000)  # ALL LOW
         time.sleep(1)
+
 except KeyboardInterrupt:
     shift_out(0)
     GPIO.cleanup()
