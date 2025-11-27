@@ -24,11 +24,10 @@ print("Toggling Q0 on/off every second…")
 
 try:
     while True:
-        shift_out(0b00000001)  # Q0 HIGH
+      shift_out(0b00000010)  # ONLY Q1 = HIGH
         time.sleep(1)
-        shift_out(0b00000000)  # all LOW
+        shift_out(0b00000000)  # ALL LOW
         time.sleep(1)
-
 except KeyboardInterrupt:
     shift_out(0)
     GPIO.cleanup()
