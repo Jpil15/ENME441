@@ -15,7 +15,8 @@ from RPi import GPIO
 from shifter import Shifter
 import time
 
-s = Shifter(data=16,clock=20,latch=21)   # Set up shifter
+
+s = Shifter(data=17,clock=27,latch=22)   # Set up shifter
 
 cycle = [0b0001,
          0b0011,
