@@ -156,9 +156,10 @@ def loop(dir, dis): # dir = rotation direction (1=cww, -1=cw)
         time.sleep(delay)
 
 try:
-    for i in movement:
+    for i in range(len(movement)):
         loop(dir[i], movement[i])
 
 
 except Exception as e:
+
     print(e)
