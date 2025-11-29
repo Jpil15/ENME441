@@ -96,13 +96,24 @@ holder.insert(0, curr_pos)
 print(holder)
 
 # Movement angles between successive turret positions (degrees)
-movement = []
+xymovement = []
 for i in range(len(holder) - 1):
     delta_angle = holder[i + 1] - holder[i]   # in degrees
-    movement.append(delta_angle)
+    xymovement.append(delta_angle)
 
 print("angle deltas (deg)")
-print(movement)
+print(xymovement)
+
+zmovement = []
+for obj in cartesian_turrets: 
+    dis = math.sqrt((obj.x**2) + (obj.y**2))
+    angle = math.degrees(math.atan(obj.z / dis))
+    zmovement.append(angle)
+
+
+
+print("z delta angles")
+print(zmovement)
 
 # === NOW WE MOVE THE MOTORS USING THE STEPPER CLASS ===
 
@@ -125,7 +136,7 @@ m2.zero()
 
 try:
     # Use motor 1 (m1) to execute the turret rotation sequence
-    for delta in movement:
+    for delta in xymovement:
         print(f"Rotating motor 1 by {delta} degrees")
         m1.rotate(delta)
         m2.rotate(delta)
