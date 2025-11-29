@@ -68,7 +68,7 @@ rotate_deg = 270 - our_theta_deg
 
 rotated_Turrets = []
 for t in turrets:
-    new_turret = Turrets(t.ident, t.rval, t.theta_deg + rotate_deg)
+    new_turret = Turrets(t.ident, t.rval, t.theta_deg + rotate_deg, t.zval)
     rotated_Turrets.append(new_turret)
 
 print("Polar Coordinates of Rotated Turrets")
