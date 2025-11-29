@@ -117,18 +117,25 @@ for i in range(len(holder) - 1):
     delta_angle = holder[i + 1] - holder[i]   # in degrees
     xymovement.append(delta_angle)
 
-print("angle deltas (deg)")
+print("xy angle deltas (deg)")
 print(xymovement)
 
-zmovement = []
+zholder = []
 for obj in cartesian_turrets: 
     dis = math.sqrt((obj.x**2) + (obj.y**2))
     angle = math.degrees(math.atan(obj.z / dis))
-    zmovement.append(angle)
+    zholder.append(angle)
+
+zholder.instert(0, curr_pos)
+zmovement = []
+
+for i in range(len(zholder) - 1):
+    delta_angle = holder[i + 1] - holder[i]   # in degrees
+    zmovement.append(delta_angle)
 
 
 
-print("z delta angles")
+print("z angle delta angles")
 print(zmovement)
 
 # === NOW WE MOVE THE MOTORS USING THE STEPPER CLASS ===
