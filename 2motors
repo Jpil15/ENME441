@@ -81,7 +81,7 @@ for t in rotated_Turrets:
     # use radians for trig (theta_rad set in __init__)
     x = t.rval * math.cos(t.theta_rad)
     y = t.rval * math.sin(t.theta_rad) + 3
-    z = 0  # given
+    z = t.zval  
 
     new_turret = NewTurrets(t.ident, x, y, z)
     cartesian_turrets.append(new_turret)
