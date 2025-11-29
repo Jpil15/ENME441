@@ -44,7 +44,7 @@ for i in range(len(ident_example)):
     turrets.append(new_turret)
 
 for g in globe_theta_example: 
-    globe = Turrets(1000, 3, globe_theta_example[i], globe_z_example[i])
+    globe = Turrets(1000, 3, globe_theta_example[g], globe_z_example[g])
     turrets.append(globe)
 
 # Print polar data
