@@ -158,9 +158,11 @@ def loop(dir, dis): # dir = rotation direction (1=cww, -1=cw)
 try:
     for i in range(len(movement)):
         loop(int(dir[i]), int(movement[i]))
+        delay(2000)
 
 
 except Exception as e:
 
     print(e)
+
 
