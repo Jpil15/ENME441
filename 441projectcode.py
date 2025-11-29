@@ -146,10 +146,10 @@ cycle = [0b0001,
 
 
 delay = 1400/1e6  # delay between steps [us]
-# Make a full rotation of the output shaft:
-def loop(dir, dis): # dir = rotation direction (1=cww, -1=cw)
-    pos = 0
+
+def xyrotate(dir, dis): # dir = rotation direction (1=ccw, -1=cw)
     print(f"dir value: {dir}")
+    pos = 0
     for i in range(dis): # 4096 steps/rev
         pos += dir
         pos %= 8 
@@ -159,23 +159,13 @@ def loop(dir, dis): # dir = rotation direction (1=cww, -1=cw)
 
 try:
     for i in range(len(movement)):
-        loop(int(dir[i]), int(abs(movement[i])))
-        print(f"movement {movement[i]}")
-        print(f"direction value: {dir[i]}")
+        xyrotate(int(dir[i]), int(abs(movement[i])))
+        
         time.sleep(2)
 
 
 except Exception as e:
-
     print(e)
-
-
-
-
-
-
-
-
 
 
 
