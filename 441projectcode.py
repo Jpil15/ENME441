@@ -159,12 +159,14 @@ try:
     for i in range(len(movement)):
         loop(int(dir[i]), int(movement[i]))
         print(f"movement {movement[i]}")
+        print(f"direction value: {dir[i]}")
         time.sleep(2)
 
 
 except Exception as e:
 
     print(e)
+
 
 
 
