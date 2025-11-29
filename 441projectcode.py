@@ -154,6 +154,7 @@ def loop(dir, dis): # dir = rotation direction (1=cww, -1=cw)
         pos %= 8 
         s.shiftByte(cycle[pos]<<4)
         time.sleep(delay)
+        print(f"pos: {pos}")
 
 try:
     for i in range(len(movement)):
@@ -166,6 +167,7 @@ try:
 except Exception as e:
 
     print(e)
+
 
 
 
