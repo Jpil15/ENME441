@@ -128,6 +128,7 @@ try:
     for delta in movement:
         print(f"Rotating motor 1 by {delta} degrees")
         m1.rotate(delta)
+        m2.rotate(delta)
         time.sleep(0.1)   # small pause between commands
 
     # EXAMPLE: Rotate the second motor (m2) as a test.
