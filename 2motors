@@ -7,11 +7,12 @@ from stepper_class_shiftregister_multiprocessing import Stepper
 
 
 class Turrets:
-    def __init__(self, ident, rval, theta_deg):
+    def __init__(self, ident, rval, theta_deg, zval):
         self.ident = ident
         self.rval = rval
         self.theta_deg = theta_deg   # store degrees for readability
         self.theta_rad = math.radians(theta_deg)  # also store radians
+        self.zval = zval
 
 
 class NewTurrets:
@@ -21,22 +22,35 @@ class NewTurrets:
         self.y = y
         self.z = z
 
-
+#Turret stuff 
 ident_example = [1, 2, 3, 4, 5]
 rval_example = [3, 3, 3, 3, 3]
 theta_example = [75, 45, 180, 135, 270]  # degrees
+
+
+#Globe stuff - gonna pretend theyre turrets just at a different z 
+globe_r_example = [3, 3, 3, 3, 3]
+globe_theta_example = [45, 138, 220, 340, 89]
+globe_z_example = [4, 1, 5, 3, 1]
+
+
+
 
 # Create list of polar turrets
 turrets = []
 for i in range(len(ident_example)):
     turret_id = f"{i+1}"
-    new_turret = Turrets(turret_id, rval_example[i], theta_example[i])
+    new_turret = Turrets(turret_id, rval_example[i], theta_example[i], 0)
     turrets.append(new_turret)
+
+for g in globe_theta_example: 
+    globe = Turrets(1000, 3, globe_theta_example[i], globe_z_example[i])
+    turrets.append(globe)
 
 # Print polar data
 print("Polar Coordinates of Turrets")
 for obj in turrets:
-    print(f"id: {obj.ident}, r: {obj.rval}, theta_deg: {obj.theta_deg}")
+    print(f"id: {obj.ident}, r: {obj.rval}, theta_deg: {obj.theta_deg}, zval: {obj.zval}")
 
 # Centering our Turret at the origin.
 our_Turret_id = input("Enter our turret ID: ")
@@ -78,6 +92,8 @@ for obj in cartesian_turrets:
     print(f"  x: {round(obj.x, 3)}")
     print(f"  y: {round(obj.y, 3)}")
     print(f"  z: {round(obj.z, 3)}")
+
+
 
 # Convert coordinates of each turret into angles
 xyangles = []
@@ -142,14 +158,7 @@ try:
         m2.rotate(delta)
         time.sleep(0.1)   # small pause between commands
 
-    # EXAMPLE: Rotate the second motor (m2) as a test.
-    # Uncomment and modify as needed.
-    # print("Rotating motor 2 by +90 degrees")
-    # m2.rotate(90)
-    # print("Rotating motor 2 by -45 degrees")
-    # m2.rotate(-45)
-
-    # Keep the main process alive while the motor processes run
+    
     while True:
         pass
 
