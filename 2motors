@@ -126,7 +126,7 @@ for obj in cartesian_turrets:
     angle = math.degrees(math.atan(obj.z / dis))
     zholder.append(angle)
 
-zholder.instert(0, curr_pos)
+zholder.insert(0, curr_pos)
 zmovement = []
 
 for i in range(len(zholder) - 1):
