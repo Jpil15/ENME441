@@ -156,7 +156,7 @@ try:
         m1.rotate(xymovement[obj])
         print(f"Rotating m1 {xymovement[obj]} degrees")
         m2.rotate(zmovement[obj])
-        print(f"Rotating m1 {zmovement[obj]} degrees")
+        print(f"Rotating m2 {zmovement[obj]} degrees")
         time.sleep(0.2)
  #   for delta in xymovement:
    #     print(f"Rotating motor 1 by {delta} degrees")
