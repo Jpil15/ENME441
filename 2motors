@@ -130,7 +130,7 @@ zholder.insert(0, curr_pos)
 zmovement = []
 
 for i in range(len(zholder) - 1):
-    delta_angle = holder[i + 1] - holder[i]   # in degrees
+    delta_angle = zholder[i + 1] - zholder[i]   # in degrees
     zmovement.append(delta_angle)
 
 
