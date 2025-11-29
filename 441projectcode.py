@@ -149,6 +149,7 @@ delay = 1400/1e6  # delay between steps [us]
 # Make a full rotation of the output shaft:
 def loop(dir, dis): # dir = rotation direction (1=cww, -1=cw)
     pos = 0
+    print(f"dir value: {dir}")
     for i in range(dis): # 4096 steps/rev
         pos += dir
         pos %= 8 
@@ -167,6 +168,7 @@ try:
 except Exception as e:
 
     print(e)
+
 
 
 
