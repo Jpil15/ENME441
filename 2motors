@@ -1,0 +1,147 @@
+import math
+from RPi import GPIO
+from shifter import Shifter
+import time
+import multiprocessing
+from stepper_class_shiftregister_multiprocessing import Stepper
+
+
+class Turrets:
+    def __init__(self, ident, rval, theta_deg):
+        self.ident = ident
+        self.rval = rval
+        self.theta_deg = theta_deg   # store degrees for readability
+        self.theta_rad = math.radians(theta_deg)  # also store radians
+
+
+class NewTurrets:
+    def __init__(self, ident, x, y, z):
+        self.ident = ident
+        self.x = x
+        self.y = y
+        self.z = z
+
+
+ident_example = [1, 2, 3, 4, 5]
+rval_example = [3, 3, 3, 3, 3]
+theta_example = [75, 45, 180, 135, 270]  # degrees
+
+# Create list of polar turrets
+turrets = []
+for i in range(len(ident_example)):
+    turret_id = f"{i+1}"
+    new_turret = Turrets(turret_id, rval_example[i], theta_example[i])
+    turrets.append(new_turret)
+
+# Print polar data
+print("Polar Coordinates of Turrets")
+for obj in turrets:
+    print(f"id: {obj.ident}, r: {obj.rval}, theta_deg: {obj.theta_deg}")
+
+# Centering our Turret at the origin.
+our_Turret_id = input("Enter our turret ID: ")
+
+our_theta_deg = None
+for t in turrets:
+    if our_Turret_id == t.ident:
+        our_theta_deg = t.theta_deg
+        break
+
+if our_theta_deg is None:
+    raise ValueError("Invalid turret ID")
+
+rotate_deg = 270 - our_theta_deg
+
+rotated_Turrets = []
+for t in turrets:
+    new_turret = Turrets(t.ident, t.rval, t.theta_deg + rotate_deg)
+    rotated_Turrets.append(new_turret)
+
+print("Polar Coordinates of Rotated Turrets")
+for obj in rotated_Turrets:
+    print(f"id: {obj.ident}, r: {obj.rval}, theta_deg: {obj.theta_deg}")
+
+# Polar to Rect transformation
+cartesian_turrets = []
+for t in rotated_Turrets:
+    # use radians for trig (theta_rad set in __init__)
+    x = t.rval * math.cos(t.theta_rad)
+    y = t.rval * math.sin(t.theta_rad) + 3
+    z = 0  # given
+
+    new_turret = NewTurrets(t.ident, x, y, z)
+    cartesian_turrets.append(new_turret)
+
+print("Cartesian Turrets")
+for obj in cartesian_turrets:
+    print(f"id: {obj.ident}")
+    print(f"  x: {round(obj.x, 3)}")
+    print(f"  y: {round(obj.y, 3)}")
+    print(f"  z: {round(obj.z, 3)}")
+
+# Convert coordinates of each turret into angles
+xyangles = []
+for obj in cartesian_turrets:
+    if obj.y > 0.0:
+        angle = math.degrees(math.atan(obj.x / obj.y))
+        xyangles.append(angle)
+
+print("raw angles to rotate to")
+print(xyangles)
+
+curr_pos = 0
+
+holder = xyangles
+holder.insert(0, curr_pos)
+print(holder)
+
+# Movement angles between successive turret positions (degrees)
+movement = []
+for i in range(len(holder) - 1):
+    delta_angle = holder[i + 1] - holder[i]   # in degrees
+    movement.append(delta_angle)
+
+print("angle deltas (deg)")
+print(movement)
+
+# === NOW WE MOVE THE MOTORS USING THE STEPPER CLASS ===
+
+# One shared shift register for both motors
+s = Shifter(data=17, clock=27, latch=22)
+
+# Use a multiprocessing.Lock so only one motor updates the shifter at a time
+lock = multiprocessing.Lock()
+
+# Instantiate 2 Stepper motors on the same shifter.
+# Per the Stepper docstring:
+#   - The 2nd motor instance (m2) must be wired to Qa–Qd
+#   - The 1st motor instance (m1) must be wired to Qe–Qh
+m1 = Stepper(s, lock)   # motor on Qe–Qh
+m2 = Stepper(s, lock)   # motor on Qa–Qd
+
+# Set both motor zero positions
+m1.zero()
+m2.zero()
+
+try:
+    # Use motor 1 (m1) to execute the turret rotation sequence
+    for delta in movement:
+        print(f"Rotating motor 1 by {delta} degrees")
+        m1.rotate(delta)
+        time.sleep(0.1)   # small pause between commands
+
+    # EXAMPLE: Rotate the second motor (m2) as a test.
+    # Uncomment and modify as needed.
+    # print("Rotating motor 2 by +90 degrees")
+    # m2.rotate(90)
+    # print("Rotating motor 2 by -45 degrees")
+    # m2.rotate(-45)
+
+    # Keep the main process alive while the motor processes run
+    while True:
+        pass
+
+except KeyboardInterrupt:
+    print("\nStopped by user")
+except Exception as e:
+    print(e)
