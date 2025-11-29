@@ -43,7 +43,7 @@ def loop(dir): # dir = rotation direction (1=cww, -1=cw)
 
 try:
     loop(-1)
-         print("now going ccw")
+    print("now going ccw")
     loop(1)
 except Exception as e:
     print(e)
