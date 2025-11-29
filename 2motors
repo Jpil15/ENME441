@@ -44,7 +44,7 @@ for i in range(len(ident_example)):
     turrets.append(new_turret)
 
 for g in range(len(globe_theta_example)): 
-    globe = Turrets(1000, 3, globe_theta_example[g], globe_z_example[g])
+    globe = Turrets(1000, 3, globe_theta_example[i], globe_z_example[g])
     turrets.append(globe)
 
 # Print polar data
@@ -81,7 +81,7 @@ for t in rotated_Turrets:
     # use radians for trig (theta_rad set in __init__)
     x = t.rval * math.cos(t.theta_rad)
     y = t.rval * math.sin(t.theta_rad) + 3
-    z = t.zval  
+    z = t.zval  # given
 
     new_turret = NewTurrets(t.ident, x, y, z)
     cartesian_turrets.append(new_turret)
@@ -152,11 +152,17 @@ m2.zero()
 
 try:
     # Use motor 1 (m1) to execute the turret rotation sequence
-    for delta in xymovement:
-        print(f"Rotating motor 1 by {delta} degrees")
-        m1.rotate(delta)
-        m2.rotate(delta)
-        time.sleep(0.1)   # small pause between commands
+    for obj in range(len(xymovement)): 
+        m1.rotate(xymovement[obj])
+        print(f"Rotating m1 {xymovement[obj]} degrees")
+        m2.rotate(zmovement[obj])
+        print(f"Rotating m1 {zmovement[obj]} degrees")
+        time.sleep(0.2)
+ #   for delta in xymovement:
+   #     print(f"Rotating motor 1 by {delta} degrees")
+     #   m1.rotate(delta)
+   #     m2.rotate(delta)
+    #    time.sleep(0.1)   # small pause between commands
 
     
     while True:
