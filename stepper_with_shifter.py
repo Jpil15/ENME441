@@ -39,7 +39,7 @@ def loop(dir): # dir = rotation direction (1=cww, -1=cw)
         pos %= 8 
         s.shiftByte(cycle[pos]<<4)
         time.sleep(delay)
-         print(f"pos value: {pos}") 
+        print(f"pos value: {pos}") 
 
 try:
     loop(-1)
