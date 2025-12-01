@@ -70,12 +70,9 @@ class NewTurrets:
 #Turret stuff 
 ident_example = turret_ids
 rval_example = []
-for in range(len(turret_r)):
-    x = turret_r[i[ / 100
+for i in range(len(turret_r)):
+    x = turret_r[i] / 100
     rval_example.append(x)
-
-
-
 
 
 theta_example = []
