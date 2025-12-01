@@ -4,7 +4,7 @@ import socketserver
 import urllib.parse
 import threading
 
-import turretmotors  # <-- imports the file created above
+import turretmotors   # <-- Your motor code module
 
 PORT = 8000
 
@@ -12,19 +12,19 @@ PAGE = """
 <!DOCTYPE html>
 <html>
 <head>
-<title>ENME441 Turret UI</title>
+<title>ENME441 Turret Control</title>
 <style>
-body { font-family: Arial; max-width: 600px; margin:auto; }
+body { font-family: Arial; max-width: 600px; margin: auto; }
 fieldset { padding: 15px; margin-top: 20px; }
-label { display:inline-block; width:130px; }
-button { padding: 8px 20px; }
+label { display:inline-block; width: 130px; }
+button { padding: 8px 20px; margin-top: 10px; }
 </style>
 </head>
 <body>
 
 <h1>ENME441 Turret Control</h1>
 
-<!-- Laser -->
+<!-- LASER -->
 <fieldset>
 <legend>Laser Control</legend>
 <form method="POST" action="/laser">
@@ -33,11 +33,11 @@ button { padding: 8px 20px; }
 </form>
 </fieldset>
 
-<!-- Run Motors -->
+<!-- RUN SEQUENCE -->
 <fieldset>
 <legend>Run Motor Sequence</legend>
 <form method="POST" action="/run">
-<label>Enter Turret ID:</label>
+<label>Turret ID:</label>
 <input type="number" name="tid" required><br><br>
 <button>Run Sequence</button>
 </form>
@@ -52,8 +52,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def send_html(self, html):
         data = html.encode()
         self.send_response(200)
-        self.send_header("Content-Type", "text/html")
-        self.send_header("Content-Length", str(len(data)))
+        self.send_header("Content-Type","text/html")
+        self.send_header("Content-Length",str(len(data)))
         self.end_headers()
         self.wfile.write(data)
 
@@ -65,26 +65,28 @@ class Handler(http.server.BaseHTTPRequestHandler):
         raw = self.rfile.read(length).decode()
         params = urllib.parse.parse_qs(raw)
 
-        # ---- LASER ----
+        # ===== LASER =====
         if self.path == "/laser":
             cmd = params.get("cmd",["off"])[0]
             if cmd == "on":
-                motors.laser_on()
+                turretmotors.laser_on()
             else:
-                motors.laser_off()
+                turretmotors.laser_off()
             return self.send_html(PAGE)
 
-        # ---- RUN SEQUENCE ----
+        # ===== RUN SEQUENCE =====
         if self.path == "/run":
             tid = int(params["tid"][0])
 
+            # run in background
             def worker():
-                motors.run_sequence(tid)
+                turretmotors.run_sequence(tid)
 
             threading.Thread(target=worker, daemon=True).start()
             return self.send_html(PAGE)
 
 
-with socketserver.TCPServer(("",PORT),Handler) as server:
-    print(f"Web UI running at: http://<your-pi-ip>:{PORT}")
+# ===== START SERVER FIRST =====
+with socketserver.TCPServer(("", PORT), Handler) as server:
+    print(f"\nWeb UI running at: http://<your-pi-ip>:{PORT}\n")
     server.serve_forever()
