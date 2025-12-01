@@ -8,7 +8,7 @@ import requests
 import json
 
 
-
+GPIO.setmode(GPIO.BCM)
 # RAW GitHub JSON URL
 #url = "http://192.168.1.254:8000/positions.json"
 #test url
