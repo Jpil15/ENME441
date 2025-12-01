@@ -284,8 +284,8 @@ def runturrets(theID: int) -> None:
   except Exception as e:
       print(e)
       GPIO.cleanup()    
-    time.sleep(0.1)
-    print(f"[AUTO] (stub) Finished turret program for turret {theID}")
+      time.sleep(0.1)
+      print(f"[AUTO] (stub) Finished turret program for turret {theID}")
 
 
 # =========================
