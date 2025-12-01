@@ -71,7 +71,7 @@ class NewTurrets:
 ident_example = turret_ids
 rval_example = turret_r
 theta_example = []
-for i in len(turret_theta):
+for i in range(len(turret_theta)):
     x = math.radians(turret_theta[i])
     theta_example.append(x)
   # degrees
@@ -80,7 +80,7 @@ for i in len(turret_theta):
 #Globe stuff - gonna pretend theyre turrets just at a different z 
 globe_r_example = globe_r
 globe_theta_example = []
-for i in len(globe_theta):
+for i in range(len(globe_theta)):
     x = math.radians(globe_theta[i])
     globe_theta_example.append(x)
     
