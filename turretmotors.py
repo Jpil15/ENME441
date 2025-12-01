@@ -7,7 +7,7 @@ from stepper_class_shiftregister_multiprocessing import Stepper
 import requests
 import json
 
-GPIO.cleanup()
+
 GPIO.setmode(GPIO.BCM)
 # RAW GitHub JSON URL
 #url = "http://192.168.1.254:8000/positions.json"
@@ -223,7 +223,7 @@ try:
      #   m1.rotate(delta)
    #     m2.rotate(delta)
     #    time.sleep(0.1)   # small pause between commands
-
+GPIO.cleanup()
     
     while True:
         pass
