@@ -62,7 +62,7 @@ button { padding: 8px 20px; }
 """
 
 def runturrets(theID):
-   GPIO.setmode(GPIO.BCM)
+  GPIO.setmode(GPIO.BCM)
   # RAW GitHub JSON URL
   #url = "http://192.168.1.254:8000/positions.json"
   #test url
