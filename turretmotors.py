@@ -19,24 +19,24 @@ response = requests.get(url)
 data = response.json()
 
 # ----- Extract Turret Data -----
-turret_ids1 = []
-turret_r1 = []
-turret_theta1 = []
+turret_ids = []
+turret_r = []
+turret_theta = []
 
 for tid, tinfo in data["turrets"].items():
-    turret_ids1.append(int(tid))
-    turret_r1.append(tinfo["r"])
-    turret_theta1.append(tinfo["theta"])
+    turret_ids.append(int(tid))
+    turret_r.append(tinfo["r"])
+    turret_theta.append(tinfo["theta"])
 
 # ----- Extract Globe Data -----
-globe_r1 = []
-globe_theta1 = []
-globe_z1 = []
+globe_r = []
+globe_theta = []
+globe_z = []
 
 for g in data["globes"]:
-    globe_r1.append(g["r"])
-    globe_theta1.append(g["theta"])
-    globe_z1.append(g["z"])
+    globe_r.append(g["r"])
+    globe_theta.append(g["theta"])
+    globe_z.append(g["z"])
 
 # ----- Print to verify -----
 print("Turret IDs:", turret_ids)
@@ -68,9 +68,9 @@ class NewTurrets:
         self.z = z
 
 #Turret stuff 
-ident_example = turrets_id1
-rval_example = turrets_r1
-theta_example = turret_theta1  # degrees
+ident_example = turrets_id
+rval_example = turrets_r
+theta_example = turret_theta  # degrees
 
 
 #Globe stuff - gonna pretend theyre turrets just at a different z 
