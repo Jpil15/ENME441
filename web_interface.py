@@ -4,7 +4,7 @@ import socketserver
 import urllib.parse
 import threading
 
-import turretmotors  # <-- imports the file created above
+import turretmotors.py  # <-- imports the file created above
 
 PORT = 8000
 
