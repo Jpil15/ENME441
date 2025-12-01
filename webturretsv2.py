@@ -409,6 +409,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
             def run_motor_program():
                 print(f"[SERVER] Starting AUTO turret program with ID {tid}")
+                global theID
+                theID = tid
                 runturrets(tid)
                 print(f"[SERVER] AUTO turret program finished for ID {tid}")
 
