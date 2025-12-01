@@ -212,7 +212,7 @@ m2.zero()
 
 try:
     # Use motor 1 (m1) to execute the turret rotation sequence
-    for obj in range(len(xymovement)+1): 
+    for obj in xymovement: 
         m1.rotate(xymovement[obj])
         print(f"Rotating m1 {xymovement[obj]} degrees")
         m2.rotate(zmovement[obj])
