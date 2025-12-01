@@ -343,7 +343,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
             def run_motor_program():
                 print(f"[SERVER] Running turretmotors.py with ID {tid}")
-                global theID = tid
+                global theID 
+                theID = tid
                 runturrets(tid)      
                   #subprocess.Popen(["python3", "turretmotors.py", tid])
 
