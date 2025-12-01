@@ -69,7 +69,7 @@ class NewTurrets:
 
 #Turret stuff 
 ident_example = turret_ids
-rval_example = turrets_r
+rval_example = turret_r
 theta_example = turret_theta  # degrees
 
 
