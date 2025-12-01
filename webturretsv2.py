@@ -138,7 +138,7 @@ def runturrets(theID: int) -> None:
   # Create list of polar turrets
   turrets = []
   for i in range(len(ident_example)):
-      turret_id = f"{i+1}"
+      turret_id = ident_example[i]
       new_turret = Turrets(turret_id, rval_example[i], theta_example[i], 0)
       turrets.append(new_turret)
   
