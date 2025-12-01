@@ -54,7 +54,7 @@ print("Globe z:", globe_z)
 class Turrets:
     def __init__(self, ident, rval, theta_deg, zval):
         self.ident = ident
-        self.rval = rval 
+        self.rval = rval / 100
         self.theta_deg = theta_deg   # store degrees for readability
         self.theta_rad = math.radians(theta_deg)  # also store radians
         self.zval = zval / 100
@@ -97,7 +97,7 @@ for i in range(len(ident_example)):
     turrets.append(new_turret)
 
 for g in range(len(globe_theta_example)): 
-    globe = Turrets(1000, 3, globe_theta_example[g], globe_z_example[g])
+    globe = Turrets(1000, globe_r_example[g], globe_theta_example[g], globe_z_example[g])
     turrets.append(globe)
 
 # Print polar data
