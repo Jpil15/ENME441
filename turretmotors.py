@@ -54,10 +54,10 @@ print("Globe z:", globe_z)
 class Turrets:
     def __init__(self, ident, rval, theta_deg, zval):
         self.ident = ident
-        self.rval = rval / 100
+        self.rval = rval 
         self.theta_deg = theta_deg   # store degrees for readability
         self.theta_rad = math.radians(theta_deg)  # also store radians
-        self.zval = zval / 100
+        self.zval = zval
 
 
 class NewTurrets:
@@ -69,7 +69,15 @@ class NewTurrets:
 
 #Turret stuff 
 ident_example = turret_ids
-rval_example = turret_r
+rval_example = []
+for in range(len(turret_r)):
+    x = turret_r[i[ / 100
+    rval_example.append(x)
+
+
+
+
+
 theta_example = []
 for i in range(len(turret_theta)):
     x = math.degrees(turret_theta[i])
@@ -78,7 +86,12 @@ for i in range(len(turret_theta)):
 
 
 #Globe stuff - gonna pretend theyre turrets just at a different z 
-globe_r_example = globe_r
+globe_r_example = []
+for i in range(len(globe_r)): 
+    x = globe_r[i] / 100
+    globe_r_example.append(x) # changing into meters
+
+
 globe_theta_example = []
 for i in range(len(globe_theta)):
     x = math.degrees(globe_theta[i])
@@ -121,7 +134,7 @@ rotate_deg = 270 - our_theta_deg
 
 rotated_Turrets = []
 for t in turrets:
-    new_turret = Turrets(t.ident, t.rval *100 , t.theta_deg + rotate_deg, t.zval)
+    new_turret = Turrets(t.ident, t.rval, t.theta_deg + rotate_deg, t.zval)
     rotated_Turrets.append(new_turret)
 
 print("Polar Coordinates of Rotated Turrets")
