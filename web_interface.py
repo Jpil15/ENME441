@@ -103,7 +103,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
             def run_motor_program():
                 print(f"[SERVER] Running turretmotors.py with ID {tid}")
-                subprocess.Popen(["python3", "turretmotors.py", tid])
+                theID = tid
+                #subprocess.Popen(["python3", "turretmotors.py", tid])
 
             threading.Thread(target=run_motor_program, daemon=True).start()
             return self.send_html(PAGE)
