@@ -223,12 +223,13 @@ try:
      #   m1.rotate(delta)
    #     m2.rotate(delta)
     #    time.sleep(0.1)   # small pause between commands
-GPIO.cleanup()
+
     
     while True:
         pass
 
 except KeyboardInterrupt:
     print("\nStopped by user")
+    GPIO.cleanup()
 except Exception as e:
     print(e)
