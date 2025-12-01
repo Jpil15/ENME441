@@ -6,7 +6,7 @@ from time import sleep
 GPIO.setmode(GPIO.BCM)
 
 class Shifter():
-    GPIO.setmode(GPIO.BCM)
+
     def __init__(self, data, clock, latch):
         self.dataPin = data
         self.latchPin = latch
