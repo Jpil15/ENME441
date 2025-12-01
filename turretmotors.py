@@ -188,9 +188,10 @@ print(xymovement)
 
 zholder = []
 for obj in cartesian_turrets: 
-    dis = math.sqrt((obj.x**2) + (obj.y**2))
-    angle = math.degrees(math.atan(obj.z / dis))
-    zholder.append(angle)
+    if obj.y > 0.0:
+        dis = math.sqrt((obj.x**2) + (obj.y**2))
+        angle = math.degrees(math.atan(obj.z / dis))
+        zholder.append(angle)
 
 zholder.insert(0, curr_pos)
 
