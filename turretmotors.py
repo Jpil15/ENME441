@@ -91,10 +91,13 @@ for i in range(len(globe_r)):
 
 globe_theta_example = []
 for i in range(len(globe_theta)):
-    x = math.degrees(globe_theta[i])
+    x = math.degrees(globe_theta[i]) 
     globe_theta_example.append(x)
     
-globe_z_example = globe_z
+globe_z_example = [] 
+for i in range(len(globe_z)): 
+    x = globe_z[i] / 100
+    globe_z_example.append(x)
 
 
 
