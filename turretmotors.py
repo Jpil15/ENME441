@@ -57,7 +57,7 @@ class Turrets:
         self.rval = rval
         self.theta_deg = theta_deg   # store degrees for readability
         self.theta_rad = math.radians(theta_deg)  # also store radians
-        self.zval = zval
+        self.zval = zval / 100
 
 
 class NewTurrets:
@@ -72,7 +72,7 @@ ident_example = turret_ids
 rval_example = turret_r
 theta_example = []
 for i in range(len(turret_theta)):
-    x = math.radians(turret_theta[i])
+    x = math.degrees(turret_theta[i])
     theta_example.append(x)
   # degrees
 
@@ -81,7 +81,7 @@ for i in range(len(turret_theta)):
 globe_r_example = globe_r
 globe_theta_example = []
 for i in range(len(globe_theta)):
-    x = math.radians(globe_theta[i])
+    x = math.degrees(globe_theta[i])
     globe_theta_example.append(x)
     
 globe_z_example = globe_z
