@@ -8,7 +8,6 @@ import requests
 import json
 
 
-
 GPIO.setmode(GPIO.BCM)
 # RAW GitHub JSON URL
 #url = "http://192.168.1.254:8000/positions.json"
@@ -107,9 +106,7 @@ for obj in turrets:
     print(f"id: {obj.ident}, r: {obj.rval}, theta_deg: {obj.theta_deg}, zval: {obj.zval}")
 
 # Centering our Turret at the origin.
-our_Turret_id = input("Enter our turret ID")
-
-
+our_Turret_id = input("Enter our turret ID: ")
 
 our_theta_deg = None
 for t in turrets:
