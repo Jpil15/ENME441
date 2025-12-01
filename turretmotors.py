@@ -68,7 +68,7 @@ class NewTurrets:
         self.z = z
 
 #Turret stuff 
-ident_example = turrets_id
+ident_example = turret_ids
 rval_example = turrets_r
 theta_example = turret_theta  # degrees
 
