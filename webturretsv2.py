@@ -18,7 +18,6 @@ PORT = 8000
 #  GPIO / HARDWARE SETUP
 # =========================
 
-GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 # One shared shift register for both motors
@@ -40,7 +39,7 @@ m2.zero()
 #  TURRET PROGRAM LOGIC
 # =========================
 
-def runturrets(theID: int) -> None:
+def runturrets(theID):
   GPIO.setmode(GPIO.BCM)
   # RAW GitHub JSON URL
   #url = "http://192.168.1.254:8000/positions.json"
@@ -241,24 +240,7 @@ def runturrets(theID: int) -> None:
   print("z angle delta angles")
   print(zmovement)
   
-  # === NOW WE MOVE THE MOTORS USING THE STEPPER CLASS ===
-  
-  # One shared shift register for both motors
-  s = Shifter(data=17, clock=27, latch=22)
-  
-  # Use a multiprocessing.Lock so only one motor updates the shifter at a time
-  lock = multiprocessing.Lock()
-  
-  # Instantiate 2 Stepper motors on the same shifter.
-  # Per the Stepper docstring:
-  #   - The 2nd motor instance (m2) must be wired to Qa–Qd
-  #   - The 1st motor instance (m1) must be wired to Qe–Qh
-  m1 = Stepper(s, lock)   # motor on Qe–Qh
-  m2 = Stepper(s, lock)   # motor on Qa–Qd
-  
-  # Set both motor zero positions
-  m1.zero()
-  m2.zero()
+
   
   try:
       # Use motor 1 (m1) to execute the turret rotation sequence
