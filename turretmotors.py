@@ -4,6 +4,49 @@ from shifter import Shifter
 import time
 import multiprocessing
 from stepper_class_shiftregister_multiprocessing import Stepper
+import requests
+import json
+
+
+
+# RAW GitHub JSON URL
+url = "http://192.168.1.254:8000/positions.json"
+
+# Retrieve and parse JSON
+response = requests.get(url)
+data = response.json()
+
+# ----- Extract Turret Data -----
+turret_ids1 = []
+turret_r1 = []
+turret_theta1 = []
+
+for tid, tinfo in data["turrets"].items():
+    turret_ids1.append(int(tid))
+    turret_r1.append(tinfo["r"])
+    turret_theta1.append(tinfo["theta"])
+
+# ----- Extract Globe Data -----
+globe_r1 = []
+globe_theta1 = []
+globe_z1 = []
+
+for g in data["globes"]:
+    globe_r1.append(g["r"])
+    globe_theta1.append(g["theta"])
+    globe_z1.append(g["z"])
+
+# ----- Print to verify -----
+print("Turret IDs:", turret_ids)
+print("Turret r:", turret_r)
+print("Turret theta:", turret_theta)
+
+print("Globe r:", globe_r)
+print("Globe theta:", globe_theta)
+print("Globe z:", globe_z)
+
+
+
 
 
 class Turrets:
@@ -23,15 +66,15 @@ class NewTurrets:
         self.z = z
 
 #Turret stuff 
-ident_example = [1, 2, 3, 4, 5]
-rval_example = [3, 3, 3, 3, 3]
-theta_example = [75, 45, 180, 135, 270]  # degrees
+ident_example = turrets_id1
+rval_example = turrets_r1
+theta_example = turret_theta1  # degrees
 
 
 #Globe stuff - gonna pretend theyre turrets just at a different z 
-globe_r_example = [3, 3, 3, 3, 3]
-globe_theta_example = [45, 138, 220, 340, 89]
-globe_z_example = [4, 1, 5, 3, 1]
+globe_r_example = globe_r1
+globe_theta_example = globe_theta1
+globe_z_example = globe_z1
 
 
 
