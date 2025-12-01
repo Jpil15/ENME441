@@ -10,9 +10,9 @@ import json
 
 GPIO.setmode(GPIO.BCM)
 # RAW GitHub JSON URL
-#url = "http://192.168.1.254:8000/positions.json"
+url = "http://192.168.1.254:8000/positions.json"
 #test url
-url = "https://raw.githubusercontent.com/Jpil15/JacobENME441/refs/heads/main/jsontest.json"
+#url = "https://raw.githubusercontent.com/Jpil15/JacobENME441/refs/heads/main/jsontest.json"
 
 # Retrieve and parse JSON
 response = requests.get(url)
