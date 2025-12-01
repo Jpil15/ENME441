@@ -190,6 +190,9 @@ for obj in cartesian_turrets:
     zholder.append(angle)
 
 zholder.insert(0, curr_pos)
+
+print(zholder) 
+
 zmovement = []
 
 for i in range(len(zholder) - 1):
