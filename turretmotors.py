@@ -74,9 +74,9 @@ theta_example = turret_theta  # degrees
 
 
 #Globe stuff - gonna pretend theyre turrets just at a different z 
-globe_r_example = globe_r1
-globe_theta_example = globe_theta1
-globe_z_example = globe_z1
+globe_r_example = globe_r
+globe_theta_example = globe_theta
+globe_z_example = globe_z
 
 
 
