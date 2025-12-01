@@ -62,132 +62,6 @@ button { padding: 8px 20px; }
 """
 
 
-# ---- Manual motor movement (no import of turretmotors) ----
-def rotate_motor(motor, degrees):
-    import RPi.GPIO as GPIO
-    from shifter import Shifter
-    from stepper_class_shiftregister_multiprocessing import Stepper
-    import multiprocessing
-    import time
-
-    print(f"[MANUAL] Rotating Motor {motor} by {degrees} degrees")
-
-    s = Shifter(data=17, clock=27, latch=22)
-    lock = multiprocessing.Lock()
-
-    m1 = Stepper(s, lock)
-    m2 = Stepper(s, lock)
-
-    if motor == 1:
-        m1.rotate(degrees)
-    else:
-        m2.rotate(degrees)
-
-    time.sleep(0.1)
-
-
-class Handler(http.server.BaseHTTPRequestHandler):
-
-    def send_html(self, html):
-        data = html.encode()
-        self.send_response(200)
-        self.send_header("Content-Type","text/html")
-        self.send_header("Content-Length", str(len(data)))
-        self.end_headers()
-        self.wfile.write(data)
-
-    def do_GET(self):
-        self.send_html(PAGE)
-
-    def do_POST(self):
-        length = int(self.headers.get("Content-Length",0))
-        raw = self.rfile.read(length).decode()
-        params = urllib.parse.parse_qs(raw)
-
-        # ---- Run turret code ----
-        if self.path == "/run":
-            tid = params["tid"][0]
-
-            def run_motor_program():
-                print(f"[SERVER] Running turretmotors.py with ID {tid}")
-                theID = tid
-                runturrets(tid)      
-                  #subprocess.Popen(["python3", "turretmotors.py", tid])
-
-            threading.Thread(target=run_motor_program, daemon=True).start()
-            return self.send_html(PAGE)
-
-        # ---- Manual motor control ----
-        if self.path == "/move":
-            motor = int(params["motor"][0])
-            deg = float(params["deg"][0])
-
-            rotate_motor(motor, deg)
-            return self.send_html(PAGE)
-
-
-# ---- Start server first ----
-with socketserver.TCPServer(("", PORT), Handler) as server:
-    print(f"\nWeb interface running at: http://<your_pi_ip>:{PORT}\n")
-    print("Press CTRL+C to stop.")
-    server.serve_forever()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def runturrets(theID):
   GPIO.setmode(GPIO.BCM)
   # RAW GitHub JSON URL
@@ -416,4 +290,83 @@ def runturrets(theID):
       GPIO.cleanup()
   except Exception as e:
       print(e)
+
+
+
+
+
+# ---- Manual motor movement (no import of turretmotors) ----
+def rotate_motor(motor, degrees):
+    import RPi.GPIO as GPIO
+    from shifter import Shifter
+    from stepper_class_shiftregister_multiprocessing import Stepper
+    import multiprocessing
+    import time
+
+    print(f"[MANUAL] Rotating Motor {motor} by {degrees} degrees")
+
+    s = Shifter(data=17, clock=27, latch=22)
+    lock = multiprocessing.Lock()
+
+    m1 = Stepper(s, lock)
+    m2 = Stepper(s, lock)
+
+    if motor == 1:
+        m1.rotate(degrees)
+    else:
+        m2.rotate(degrees)
+
+    time.sleep(0.1)
+
+
+class Handler(http.server.BaseHTTPRequestHandler):
+
+    def send_html(self, html):
+        data = html.encode()
+        self.send_response(200)
+        self.send_header("Content-Type","text/html")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
+    def do_GET(self):
+        self.send_html(PAGE)
+
+    def do_POST(self):
+        length = int(self.headers.get("Content-Length",0))
+        raw = self.rfile.read(length).decode()
+        params = urllib.parse.parse_qs(raw)
+
+        # ---- Run turret code ----
+        if self.path == "/run":
+            tid = params["tid"][0]
+
+            def run_motor_program():
+                print(f"[SERVER] Running turretmotors.py with ID {tid}")
+                theID = tid
+                runturrets(tid)      
+                  #subprocess.Popen(["python3", "turretmotors.py", tid])
+
+            threading.Thread(target=run_motor_program, daemon=True).start()
+            return self.send_html(PAGE)
+
+        # ---- Manual motor control ----
+        if self.path == "/move":
+            motor = int(params["motor"][0])
+            deg = float(params["deg"][0])
+
+            rotate_motor(motor, deg)
+            return self.send_html(PAGE)
+
+
+# ---- Start server first ----
+with socketserver.TCPServer(("", PORT), Handler) as server:
+    print(f"\nWeb interface running at: http://<your_pi_ip>:{PORT}\n")
+    print("Press CTRL+C to stop.")
+    server.serve_forever()
+
+
+
+
+
 
