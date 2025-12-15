@@ -179,7 +179,7 @@ def runturrets(theID):
   for t in rotated_Turrets:
       # use radians for trig (theta_rad set in __init__)
       x = t.rval * math.cos(t.theta_rad)
-      y = t.rval * math.sin(t.theta_rad) + 2
+      y = t.rval * math.sin(t.theta_rad) + (rval_example[1] / 100) 
       z = t.zval  
   
       new_turret = NewTurrets(t.ident, x, y, z)
