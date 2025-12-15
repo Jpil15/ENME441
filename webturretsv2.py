@@ -256,8 +256,9 @@ def runturrets(theID):
           print(f"Rotating m1 {xymovement[obj]} degrees")
           m2.rotate(zmovement[obj])
           print(f"Rotating m2 {zmovement[obj]} degrees")
-          time.sleep(0.2)
+          time.sleep(2)
           shootlaser()
+          time.sleep(2)
         
           
 
