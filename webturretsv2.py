@@ -240,7 +240,9 @@ def runturrets(theID):
   
   print("z angle delta angles")
   print(zmovement)
+
   
+  GPIO.setup(26, GPIO.OUT)
   def shootlaser():
     GPIO.output(26, GPIO.HIGH)
     time.sleep(2) 
