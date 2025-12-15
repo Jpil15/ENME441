@@ -241,7 +241,11 @@ def runturrets(theID):
   print("z angle delta angles")
   print(zmovement)
   
-
+  def shootlaser():
+    GPIO.output(26, GPIO.HIGH)
+    time.sleep(2) 
+    GPIO.output(26, GPIO.LOW)
+  
   
   try:
       # Use motor 1 (m1) to execute the turret rotation sequence
@@ -251,6 +255,11 @@ def runturrets(theID):
           m2.rotate(zmovement[obj])
           print(f"Rotating m2 {zmovement[obj]} degrees")
           time.sleep(0.2)
+          shootlaser()
+        
+          
+
+    
    #   for delta in xymovement:
      #     print(f"Rotating motor 1 by {delta} degrees")
        #   m1.rotate(delta)
