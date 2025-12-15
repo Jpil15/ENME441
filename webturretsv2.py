@@ -12,6 +12,8 @@ from RPi import GPIO
 from shifter import Shifter
 from stepper_class_shiftregister_multiprocessing import Stepper
 
+print("code started")
+
 PORT = 8000
 
 # =========================
