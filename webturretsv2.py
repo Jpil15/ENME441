@@ -434,16 +434,28 @@ class Handler(http.server.BaseHTTPRequestHandler):
 #  MAIN SERVER LOOP
 # =========================
 
+class ReuseTCPServer(socketserver.TCPServer):
+    allow_reuse_address = True
+
 def main():
     try:
-        with socketserver.TCPServer(("", PORT), Handler) as server:
+        with ReuseTCPServer(("", PORT), Handler) as server:
             print(f"\nWeb interface running at: http://<your_pi_ip>:{PORT}\n")
             print("Press CTRL+C to stop.")
             server.serve_forever()
     finally:
-        # On exit, release GPIO
         GPIO.cleanup()
         print("GPIO cleaned up, exiting.")
+#def main():
+ #   try:
+  #      with socketserver.TCPServer(("", PORT), Handler) as server:
+   #         print(f"\nWeb interface running at: http://<your_pi_ip>:{PORT}\n")
+    #        print("Press CTRL+C to stop.")
+     #       server.serve_forever()
+    #finally:
+        # On exit, release GPIO
+     #   GPIO.cleanup()
+      #  print("GPIO cleaned up, exiting.")
 
 
 if __name__ == "__main__":
