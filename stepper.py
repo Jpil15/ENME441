@@ -12,7 +12,7 @@ pins = [12,16,20,21] # controller inputs: in1, in2, in3, in4
 for p in pins:
   GPIO.setup(p, GPIO.OUT)
 
-delay = 1300/1e6  # delay between steps
+delay = 1800/1e6  # delay between steps
 
 # Define the pin sequence for CW motion:
 seq = [
