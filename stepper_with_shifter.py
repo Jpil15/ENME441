@@ -30,11 +30,11 @@ cycle = [0b0001,
 # track position within m_seq:
 pos = 0
 
-delay = 1400/1e6  # delay between steps [us]
+delay = 1600/1e6  # delay between steps [us]
 # Make a full rotation of the output shaft:
 def loop(dir): # dir = rotation direction (1=cww, -1=cw)
     global pos
-    for i in range(512): # 4096 steps/rev
+    for i in range(4096): # 4096 steps/rev
         pos += dir
         pos %= 8 
         s.shiftByte(cycle[pos]<<4)
