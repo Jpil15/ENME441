@@ -11,6 +11,7 @@ import requests
 from RPi import GPIO
 from shifter import ShifterClass
 from stepper_class_shiftregister_multiprocessing import Stepper
+print("starting the program lol")
 
 PORT = 8000
 
