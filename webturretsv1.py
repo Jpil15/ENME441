@@ -9,7 +9,7 @@ import multiprocessing
 import requests
 
 from RPi import GPIO
-from shifter import Shifter
+from shifter import ShifterClass
 from stepper_class_shiftregister_multiprocessing import Stepper
 
 PORT = 8000
@@ -21,7 +21,7 @@ PORT = 8000
 GPIO.setmode(GPIO.BCM)
 
 # One shared shift register for both motors
-s = Shifter(data=17, clock=27, latch=22)
+s = ShifterClass(data=17, clock=27, latch=22)
 
 # Shared lock for multiprocessing-based stepper driver
 lock = multiprocessing.Lock()
