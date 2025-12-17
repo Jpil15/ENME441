@@ -245,7 +245,7 @@ def runturrets(theID):
   try:
       # Use motor 1 (m1) to execute the turret rotation sequence
       for obj in range(len(xymovement)):
-          m1.rotate(xymovement[obj])
+          m1.rotate(xymovement[obj]/2)
           print(f"Rotating m1 {xymovement[obj]} degrees")
           time.sleep(2)
 
