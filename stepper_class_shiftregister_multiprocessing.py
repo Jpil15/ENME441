@@ -37,7 +37,7 @@ class Stepper:
     shifter_outputs = 0   # track shift register outputs for all motors
     seq = [0b0001,0b0011,0b0010,0b0110,0b0100,0b1100,0b1000,0b1001] # CCW sequence
     delay = 3000          # delay between motor steps [us]
-    steps_per_degree = 4096/360    # 4096 steps/rev * 1/360 rev/deg
+    steps_per_degree = 1024/360#4096/360    # 4096 steps/rev * 1/360 rev/deg
 
     def __init__(self, shifter, lock):
         self.s = shifter           # shift register
@@ -66,7 +66,7 @@ class Stepper:
     # Move relative angle from current position:
     def __rotate(self, delta):
         self.lock.acquire()                 # wait until the lock is available
-        numSteps = int(Stepper.steps_per_degree * abs(delta)/4)    # find the right # of steps
+        numSteps = int(Stepper.steps_per_degree * abs(delta))    # find the right # of steps
         dir = self.__sgn(delta)        # find the direction (+/-1)
         for s in range(numSteps):      # take the steps
             self.__step(dir)
