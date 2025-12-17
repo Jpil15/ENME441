@@ -37,9 +37,14 @@ m1.zero()
 m2.zero()
 
 # =========================
-#  LASER SETUP (GLOBAL)
+#  RUN DEBOUNCE / SAFETY
 # =========================
+run_lock = threading.Lock()
+auto_running = False
 
+# =========================
+#  LASER (GLOBAL)
+# =========================
 LASER_PIN = 26
 GPIO.setup(LASER_PIN, GPIO.OUT)
 GPIO.output(LASER_PIN, GPIO.LOW)
@@ -57,12 +62,13 @@ def shootlaser(duration_s: float = 2.0) -> None:
 
 def runturrets(theID):
   GPIO.setmode(GPIO.BCM)
-  print(f"[AUTO] runturrets started at {time.time():.3f}")
+  # RAW GitHub JSON URL
   #url = "http://192.168.1.254:8000/positions.json"
   #test url
   #url = "https://raw.githubusercontent.com/Jpil15/JacobENME441/refs/heads/main/jsontest.json"
   url = "https://raw.githubusercontent.com/Jpil15/JacobENME441/refs/heads/main/positions.json"
   #url = "http://192.168.1.254:8000/positions.json"
+
   # Retrieve and parse JSON
   response = requests.get(url)
   data = response.json()
@@ -113,6 +119,7 @@ def runturrets(theID):
 
   #Turret stuff
   ident_example = turret_ids
+
   rval_example = []
   for i in range(len(turret_r)):
       x = turret_r[i] / 100
@@ -230,7 +237,6 @@ def runturrets(theID):
           zholder.append(angle)
 
   zholder.insert(0, curr_pos)
-
   print(zholder)
 
   zmovement = []
@@ -244,7 +250,7 @@ def runturrets(theID):
   try:
       # Use motor 1 (m1) to execute the turret rotation sequence
       for obj in range(len(xymovement)):
-          m1.rotate(xymovement[obj]/2)
+          m1.rotate(xymovement[obj])
           print(f"Rotating m1 {xymovement[obj]} degrees")
           time.sleep(2)
 
@@ -252,7 +258,7 @@ def runturrets(theID):
           print(f"Rotating m2 {zmovement[obj]} degrees")
           time.sleep(2)
 
-          shootlaser()   # now uses GLOBAL shootlaser()
+          shootlaser()
           time.sleep(2)
 
       while True:
@@ -330,7 +336,7 @@ PAGE = f"""\
         <form method="POST" action="/run">
             <label for="tid">Turret ID:</label>
             <input type="number" id="tid" name="tid" min="1" required>
-            <button type="submit">Run Turret Program</button>
+            <button type="submit" onclick="this.disabled=true; this.form.submit();">Run Turret Program</button>
         </form>
     </fieldset>
 
@@ -395,12 +401,26 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 print("[SERVER] Invalid or missing turret ID")
                 return self.send_html(PAGE)
 
+            global auto_running
+
+            # Prevent starting the program multiple times
+            with run_lock:
+                if auto_running:
+                    print("[SERVER] Ignored /run (auto already running)")
+                    return self.send_html(PAGE)
+                auto_running = True
+
             def run_motor_program():
-                print(f"[SERVER] Starting AUTO turret program with ID {tid}")
-                global theID
-                theID = tid
-                runturrets(tid)
-                print(f"[SERVER] AUTO turret program finished for ID {tid}")
+                global auto_running
+                try:
+                    print(f"[SERVER] Starting AUTO turret program with ID {tid}")
+                    global theID
+                    theID = tid
+                    runturrets(tid)
+                    print(f"[SERVER] AUTO turret program finished for ID {tid}")
+                finally:
+                    with run_lock:
+                        auto_running = False
 
             threading.Thread(target=run_motor_program, daemon=True).start()
             return self.send_html(PAGE)
