@@ -57,13 +57,12 @@ def shootlaser(duration_s: float = 2.0) -> None:
 
 def runturrets(theID):
   GPIO.setmode(GPIO.BCM)
-  # RAW GitHub JSON URL
+  print(f"[AUTO] runturrets started at {time.time():.3f}")
   #url = "http://192.168.1.254:8000/positions.json"
   #test url
   #url = "https://raw.githubusercontent.com/Jpil15/JacobENME441/refs/heads/main/jsontest.json"
   url = "https://raw.githubusercontent.com/Jpil15/JacobENME441/refs/heads/main/positions.json"
   #url = "http://192.168.1.254:8000/positions.json"
-
   # Retrieve and parse JSON
   response = requests.get(url)
   data = response.json()
