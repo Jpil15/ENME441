@@ -261,8 +261,7 @@ def runturrets(theID):
           shootlaser()
           time.sleep(2)
 
-      while True:
-          pass
+      
 
   except KeyboardInterrupt:
       print("\nStopped by user")
