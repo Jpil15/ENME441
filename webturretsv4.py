@@ -66,8 +66,8 @@ def runturrets(theID):
   #url = "http://192.168.1.254:8000/positions.json"
   #test url
   #url = "https://raw.githubusercontent.com/Jpil15/JacobENME441/refs/heads/main/jsontest.json"
-  #url = "https://raw.githubusercontent.com/Jpil15/JacobENME441/refs/heads/main/positions.json"
-  url = "http://192.168.1.254:8000/positions.json"
+  url = "https://raw.githubusercontent.com/Jpil15/JacobENME441/refs/heads/main/positions.json"
+  #url = "http://192.168.1.254:8000/positions.json"
 
   # Retrieve and parse JSON
   response = requests.get(url)
